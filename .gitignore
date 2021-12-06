@@ -127,3 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#temp dataset folders
+tmp_debug/*
+tmp_fake_faces/*
+mtcnn/
+app/static/videos/*
+train_sample_videos/*
+prepared_dataset/*
+split_dataset/*
+!.keep

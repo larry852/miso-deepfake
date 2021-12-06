@@ -1,0 +1,86 @@
+<!doctype html>
+<title>Deep fake detector</title>
+<h2>Selecciona video para analizar</h2>
+<p>
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		<ul>
+		{% for message in messages %}
+		  <li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	  {% endif %}
+	{% endwith %}
+</p>
+{% if filename %}
+	<div style="margin: 10px auto;">
+		<video autoplay="autoplay" controls="controls" preload="preload" width="500">
+			<source src="{{ url_for('display_video', filename=filename) }}" type="video/mp4"></source>
+		</video>		
+	</div>
+	<p>Clases</p>
+	<li>Deepfake</li>
+	<li>Real</li>
+	<p>Resultado</p>
+	{% if prediction == 1 %}
+		<div class="green"> Real! </div>
+	{% else %}
+		<div class="red"> Deepfake! </div>
+	{% endif %}
+	<hr>
+	<h2>Resultados por imagen ({{images|length}})</h2>
+	<div class="row">
+		{% for image in images %}
+			<div class="column">
+				<img src="{{ url_for('display_image', video=filename, filename=image.Filename.split('/')[1]) }}" alt={{image.Filename}}/>
+				{% if image.Prediction == 1 %}
+					<div class="green"> Real! </div>
+				{% else %}
+					<div class="red"> Deepfake! </div>
+				{% endif %}
+			</div>
+		{% endfor %}
+	  </div>
+{% endif %}
+<form method="post" action="/" enctype="multipart/form-data">
+    <dl>
+		<p>
+			<input type="file" name="file" autocomplete="off" required>
+		</p>
+    </dl>
+    <p>
+		<input type="submit" value="Cargar">
+	</p>
+</form>
+
+
+<style>
+.column {
+  float: left;
+  padding: 5px;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 33.33%;
+  padding: 5px;
+}
+
+.green {
+    background-color: #C1E1C1;
+}
+    
+.red {
+	background-color: #FAA0A0;
+}
+</style>
