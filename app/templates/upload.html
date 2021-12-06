@@ -23,9 +23,9 @@
 	<li>Real</li>
 	<p>Resultado</p>
 	{% if prediction == 1 %}
-		<div class="green"> Real! </div>
-	{% else %}
 		<div class="red"> Deepfake! </div>
+	{% else %}
+		<div class="green"> Real! </div>
 	{% endif %}
 	<hr>
 	<h2>Resultados por imagen ({{images|length}})</h2>
@@ -34,9 +34,9 @@
 			<div class="column">
 				<img src="{{ url_for('display_image', video=filename, filename=image.Filename.split('/')[1]) }}" alt={{image.Filename}}/>
 				{% if image.Prediction == 1 %}
-					<div class="green"> Real! </div>
-				{% else %}
 					<div class="red"> Deepfake! </div>
+				{% else %}
+					<div class="green"> Real! </div>
 				{% endif %}
 			</div>
 		{% endfor %}
